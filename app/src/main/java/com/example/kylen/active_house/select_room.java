@@ -46,8 +46,6 @@ public class select_room extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_room);
 
-
-
         user_id = getIntent().getStringExtra("uid");
         username = getIntent().getStringExtra("username");
 
@@ -57,8 +55,8 @@ public class select_room extends AppCompatActivity {
 
 
         tv.setText("Hi " + username + "\n Please select a room:");
-        SpannableString ss=  new SpannableString(username);
-        ss.setSpan(new ForegroundColorSpan(Color.GREEN), 0, 5, 0);
+        //SpannableString ss=  new SpannableString(username);
+        //ss.setSpan(new ForegroundColorSpan(Color.GREEN), 0, 5, 0);
         adapter = new ArrayAdapter<String>(this,
                 R.layout.room_item, R.id.tv_room_item, rooms);
 
@@ -114,13 +112,15 @@ public class select_room extends AppCompatActivity {
                     JSONObject jsonObject = null;
                     try {
                         jsonObject = new JSONObject(response);
-
+                        JSONObject mObj = jsonObject.getJSONArray("ser_response").getJSONObject(0);
                         for(int i = 0; i < jsonObject.getJSONArray("ser_response").length(); i++)
                             rooms.add("Room  " + (i+1));
 
                         adapter.notifyDataSetChanged();
 
                     } catch (JSONException e) {
+                        TextView tv = findViewById(R.id.tv1);
+                        tv.setText("Hi " + username + "\n Please make a room in RaspberryPi:");
                         e.printStackTrace();
                     }
 
